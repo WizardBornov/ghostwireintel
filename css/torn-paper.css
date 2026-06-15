@@ -1,0 +1,199 @@
+/* ============================================
+   GHOSTWIRE — Torn Paper Effects
+   CSS-only ripped/torn paper aesthetic
+   ============================================ */
+
+/* ---- Torn Paper Container ---- */
+.torn-paper {
+  position: relative;
+  background: var(--paper-bg);
+  color: var(--paper-text);
+  padding: var(--space-2xl) var(--space-xl);
+  margin: var(--space-2xl) 0;
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-display);
+}
+
+/* Top torn edge */
+.torn-paper::before {
+  content: '';
+  position: absolute;
+  top: -18px;
+  left: -4px;
+  right: -4px;
+  height: 22px;
+  background: var(--paper-bg);
+  clip-path: polygon(
+    0% 100%,
+    1% 55%, 2.5% 72%, 4% 40%, 5.5% 65%, 7% 35%,
+    9% 58%, 10.5% 28%, 12% 70%, 14% 42%, 15.5% 60%,
+    17% 30%, 19% 68%, 20.5% 45%, 22% 25%, 24% 62%,
+    25.5% 38%, 27% 72%, 29% 50%, 30.5% 28%, 32% 65%,
+    33.5% 40%, 35% 70%, 37% 32%, 38.5% 58%, 40% 45%,
+    42% 72%, 43.5% 35%, 45% 60%, 47% 28%, 48.5% 68%,
+    50% 42%, 51.5% 65%, 53% 30%, 55% 70%, 56.5% 48%,
+    58% 25%, 60% 62%, 61.5% 38%, 63% 72%, 65% 45%,
+    66.5% 28%, 68% 60%, 70% 42%, 71.5% 68%, 73% 32%,
+    75% 58%, 76.5% 40%, 78% 72%, 80% 30%, 81.5% 65%,
+    83% 48%, 85% 70%, 86.5% 35%, 88% 55%, 90% 42%,
+    91.5% 68%, 93% 28%, 94.5% 60%, 96% 45%, 97.5% 70%,
+    99% 38%, 100% 100%
+  );
+  z-index: 2;
+}
+
+/* Bottom torn edge */
+.torn-paper::after {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: -4px;
+  right: -4px;
+  height: 22px;
+  background: var(--paper-bg);
+  clip-path: polygon(
+    0% 0%,
+    1% 50%, 3% 30%, 5% 65%, 7% 40%, 9% 70%,
+    11% 35%, 13% 55%, 15% 25%, 17% 60%, 19% 42%,
+    21% 72%, 23% 38%, 25% 55%, 27% 28%, 29% 65%,
+    31% 45%, 33% 70%, 35% 32%, 37% 58%, 39% 42%,
+    41% 68%, 43% 30%, 45% 62%, 47% 48%, 49% 70%,
+    51% 35%, 53% 55%, 55% 28%, 57% 65%, 59% 40%,
+    61% 72%, 63% 38%, 65% 58%, 67% 30%, 69% 62%,
+    71% 45%, 73% 68%, 75% 35%, 77% 55%, 79% 42%,
+    81% 70%, 83% 28%, 85% 60%, 87% 38%, 89% 65%,
+    91% 48%, 93% 72%, 95% 35%, 97% 58%, 99% 42%,
+    100% 0%
+  );
+  z-index: 2;
+}
+
+/* Shadow beneath torn paper */
+.torn-paper-shadow {
+  position: relative;
+}
+
+.torn-paper-shadow::before {
+  content: '';
+  position: absolute;
+  bottom: -24px;
+  left: 10px;
+  right: 10px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  filter: blur(8px);
+  z-index: 0;
+}
+
+/* ---- Torn Paper Variants ---- */
+.torn-paper--dark {
+  background: var(--paper-dark);
+}
+
+.torn-paper--dark::before,
+.torn-paper--dark::after {
+  background: var(--paper-dark);
+}
+
+/* Only top edge torn */
+.torn-paper--top-only::after {
+  display: none;
+}
+
+/* Only bottom edge torn */
+.torn-paper--bottom-only::before {
+  display: none;
+}
+
+/* ---- Torn Paper Content ---- */
+.torn-paper-title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  color: var(--paper-text);
+  margin-bottom: var(--space-md);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.torn-paper-body {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  color: var(--paper-text);
+  line-height: var(--leading-relaxed);
+}
+
+.torn-paper-body p {
+  color: var(--paper-text);
+}
+
+/* ---- Red Tape / Classified Strip ---- */
+.classified-tape {
+  display: inline-block;
+  background: var(--accent-primary);
+  color: var(--text-bright);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  padding: var(--space-xs) var(--space-lg);
+  transform: rotate(-3deg);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 5;
+}
+
+.classified-tape--large {
+  font-size: var(--text-lg);
+  padding: var(--space-sm) var(--space-xl);
+}
+
+/* ---- Paper Texture Overlay ---- */
+.paper-texture {
+  position: relative;
+}
+
+.paper-texture::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ---- Ripped Edge Divider ---- */
+.rip-divider {
+  width: 100%;
+  height: 30px;
+  background: transparent;
+  position: relative;
+  margin: var(--space-xl) 0;
+}
+
+.rip-divider::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: var(--bg-primary);
+  clip-path: polygon(
+    0% 50%,
+    2% 20%, 4% 60%, 6% 30%, 8% 70%, 10% 25%,
+    12% 55%, 14% 35%, 16% 65%, 18% 20%, 20% 50%,
+    22% 30%, 24% 70%, 26% 40%, 28% 60%, 30% 25%,
+    32% 55%, 34% 35%, 36% 65%, 38% 20%, 40% 50%,
+    42% 30%, 44% 70%, 46% 40%, 48% 60%, 50% 25%,
+    52% 55%, 54% 35%, 56% 65%, 58% 20%, 60% 50%,
+    62% 30%, 64% 70%, 66% 40%, 68% 60%, 70% 25%,
+    72% 55%, 74% 35%, 76% 65%, 78% 20%, 80% 50%,
+    82% 30%, 84% 70%, 86% 40%, 88% 60%, 90% 25%,
+    92% 55%, 94% 35%, 96% 65%, 98% 40%, 100% 50%,
+    100% 100%, 0% 100%
+  );
+}

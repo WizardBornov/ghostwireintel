@@ -1,0 +1,172 @@
+/* ============================================
+   GHOSTWIRE — Report Page Styles
+   ============================================ */
+
+.report-page {
+  padding-bottom: var(--space-4xl);
+}
+
+/* ---- Report Header ---- */
+.report-header {
+  padding: var(--space-3xl) 0 var(--space-2xl);
+  text-align: center;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: var(--space-2xl);
+}
+
+.report-issue-date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--container-narrow);
+  margin: 0 auto var(--space-xl);
+}
+
+.report-issue {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+}
+
+.report-date {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  letter-spacing: var(--tracking-wider);
+}
+
+.report-title {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-md);
+  max-width: var(--container-narrow);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.report-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  font-style: italic;
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+}
+
+/* ---- Report Cover Image ---- */
+.report-cover {
+  margin: var(--space-2xl) 0;
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  position: relative;
+}
+
+.report-cover img {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  filter: contrast(1.05);
+}
+
+.report-cover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(to top, var(--bg-primary), transparent);
+  pointer-events: none;
+}
+
+/* ---- Report Body ---- */
+.report-body {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+}
+
+/* ---- Report Status Badge ---- */
+.report-status {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  padding: 3px 12px;
+  border: 1px solid;
+  margin-bottom: var(--space-lg);
+}
+
+.report-status--published {
+  color: var(--status-published);
+  border-color: var(--status-published);
+}
+
+.report-status--ongoing {
+  color: var(--status-ongoing);
+  border-color: var(--status-ongoing);
+}
+
+.report-status--archived {
+  color: var(--status-archived);
+  border-color: var(--status-archived);
+}
+
+/* ---- Report Tags ---- */
+.report-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: var(--space-lg) 0;
+  justify-content: center;
+}
+
+/* ---- Report Actions ---- */
+.report-actions {
+  display: flex;
+  gap: var(--space-lg);
+  margin: var(--space-2xl) 0;
+  flex-wrap: wrap;
+}
+
+/* ---- Related Reports ---- */
+.related-reports {
+  padding: var(--space-3xl) 0;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: var(--space-3xl);
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+/* ---- Print Styles for Report ---- */
+@media print {
+  .classification-bar,
+  .main-nav,
+  .site-footer,
+  .share-buttons,
+  .report-actions,
+  .related-reports,
+  .back-nav,
+  .pdf-viewer-container {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .report-title,
+  .report-subtitle,
+  .metadata-label,
+  .metadata-value,
+  .section-label {
+    color: black;
+  }
+}

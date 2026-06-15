@@ -1,0 +1,88 @@
+/* ============================================
+   GHOSTWIRE — Archive Page Styles
+   ============================================ */
+
+.archive-header {
+  text-align: center;
+  padding: var(--space-4xl) 0 var(--space-2xl);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.archive-header h1 {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-md);
+}
+
+.archive-header p {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+/* ---- Filter Bar ---- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  padding: var(--space-lg) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: var(--space-2xl);
+}
+
+.filter-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  margin-right: var(--space-md);
+}
+
+.filter-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 12px;
+  cursor: pointer;
+  letter-spacing: var(--tracking-wide);
+  transition: all var(--transition-fast);
+}
+
+.filter-tag:hover,
+.filter-tag.active {
+  color: var(--text-bright);
+  border-color: var(--accent-primary);
+  background: var(--accent-subtle);
+}
+
+.filter-tag.active {
+  background: var(--accent-dark);
+}
+
+/* ---- Archive Grid ---- */
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--space-xl);
+  padding-bottom: var(--space-4xl);
+}
+
+/* ---- Archive Count ---- */
+.archive-count {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  margin-bottom: var(--space-xl);
+}
+
+.archive-count span {
+  color: var(--accent-primary);
+}

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ghostwireintel.page/sitemap.xml
+
+# GhostWire — Threat Intelligence, Told As Narrative.
+# https://ghostwireintel.page

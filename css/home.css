@@ -1,0 +1,172 @@
+/* ============================================
+   GHOSTWIRE — Home Page Styles
+   ============================================ */
+
+/* ---- Hero Section ---- */
+.hero {
+  text-align: center;
+  padding: var(--space-5xl) var(--gutter) var(--space-4xl);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle red gradient vignette */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse at top, rgba(139, 26, 26, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom, rgba(0, 0, 0, 0.8) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-barbed-wire {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto var(--space-xl);
+  opacity: 0.35;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: var(--text-6xl);
+  color: var(--text-bright);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+  text-shadow: 0 0 40px rgba(196, 30, 30, 0.2);
+  line-height: 1;
+}
+
+.hero-tagline {
+  font-family: var(--font-body);
+  font-size: var(--text-xl);
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: var(--space-lg);
+  letter-spacing: var(--tracking-normal);
+}
+
+.hero-subtitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto var(--space-2xl);
+  line-height: var(--leading-relaxed);
+}
+
+.hero-cta {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+/* ---- What Is GhostWire Section ---- */
+.about-brief {
+  margin: var(--space-2xl) auto;
+  max-width: var(--container-narrow);
+}
+
+/* ---- Featured Report Section ---- */
+.featured-section {
+  padding: var(--space-3xl) 0;
+}
+
+.featured-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  margin-bottom: var(--space-xl);
+  text-align: center;
+}
+
+.featured-label::before,
+.featured-label::after {
+  content: '—';
+  margin: 0 var(--space-md);
+  color: var(--text-muted);
+}
+
+/* ---- Recent Reports Grid ---- */
+.recent-section {
+  padding: var(--space-3xl) 0;
+}
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+}
+
+/* ---- Recent Notes Section ---- */
+.notes-preview-section {
+  padding: var(--space-3xl) 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.notes-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+/* ---- About Brief Section ---- */
+.about-home-section {
+  padding: var(--space-3xl) 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.about-home-content {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-home-content h2 {
+  margin-bottom: var(--space-xl);
+}
+
+.about-home-content p {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+}
+
+/* ---- Archive CTA Section ---- */
+.archive-cta-section {
+  padding: var(--space-3xl) 0;
+  text-align: center;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.archive-cta-section p {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-xl);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+/* ---- Barbed Wire Decoration ---- */
+.barbed-wire-divider {
+  width: 100%;
+  max-width: 500px;
+  margin: var(--space-2xl) auto;
+  opacity: 0.2;
+}

@@ -1,0 +1,120 @@
+/* ============================================
+   GHOSTWIRE — Design Tokens
+   Threat Intelligence, Told As Narrative.
+   ============================================ */
+
+:root {
+  /* ---- Background Colors ---- */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-tertiary: #1a1a1a;
+  --bg-card: #141414;
+  --bg-elevated: #1e1e1e;
+  --bg-input: #0e0e0e;
+
+  /* ---- Accent Colors ---- */
+  --accent-primary: #c41e1e;
+  --accent-dark: #8b1a1a;
+  --accent-light: #e63333;
+  --accent-glow: rgba(196, 30, 30, 0.3);
+  --accent-subtle: rgba(196, 30, 30, 0.12);
+
+  /* ---- Text Colors ---- */
+  --text-primary: #e0d8cc;
+  --text-secondary: #a89f91;
+  --text-muted: #6b6358;
+  --text-accent: #c41e1e;
+  --text-bright: #f5f0e8;
+
+  /* ---- Paper (Torn Paper Sections) ---- */
+  --paper-bg: #f0ebe1;
+  --paper-dark: #e0d8c8;
+  --paper-text: #1a1714;
+  --paper-text-muted: #4a4540;
+
+  /* ---- Borders ---- */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-medium: rgba(255, 255, 255, 0.10);
+  --border-accent: rgba(196, 30, 30, 0.4);
+  --border-accent-strong: rgba(196, 30, 30, 0.8);
+
+  /* ---- Status Colors ---- */
+  --status-published: #c41e1e;
+  --status-ongoing: #d4a832;
+  --status-archived: #6b6358;
+
+  /* ---- Typography ---- */
+  --font-display: 'Special Elite', cursive;
+  --font-body: 'Source Serif 4', 'Georgia', serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ---- Font Sizes ---- */
+  --text-xs: 0.7rem;
+  --text-sm: 0.8125rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.75rem;
+  --text-5xl: 3.5rem;
+  --text-6xl: 5rem;
+
+  /* ---- Line Heights ---- */
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.8;
+
+  /* ---- Letter Spacing ---- */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+  --tracking-widest: 0.2em;
+
+  /* ---- Spacing ---- */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+  --space-5xl: 8rem;
+
+  /* ---- Layout ---- */
+  --container-max: 1100px;
+  --container-narrow: 800px;
+  --container-wide: 1400px;
+  --gutter: 1.5rem;
+
+  /* ---- Borders & Radii ---- */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 20px rgba(196, 30, 30, 0.15);
+  --shadow-glow-strong: 0 0 40px rgba(196, 30, 30, 0.25);
+  --shadow-inset: inset 0 1px 4px rgba(0, 0, 0, 0.4);
+
+  /* ---- Transitions ---- */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+  --transition-slower: 600ms ease;
+
+  /* ---- Z-index Scale ---- */
+  --z-base: 1;
+  --z-dropdown: 10;
+  --z-sticky: 50;
+  --z-overlay: 100;
+  --z-modal: 500;
+  --z-top: 1000;
+}
