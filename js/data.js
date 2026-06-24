@@ -43,6 +43,7 @@ const REPORTS = [
     summary: 'An infrastructure pivot from a confirmed APT36 C2 produced a five-node credential harvesting cluster operating across three hosting providers under two domain namespaces — one a lookalike of a real Mexican company. The cluster has been in continuous operation since at least May 2023. None of it appears in any prior threat intelligence report. The operational discipline documented here is inconsistent with publicly attributed APT36 capability.',
     executiveSummary: 'There is a particular kind of unease that comes from pulling a thread and finding that it leads somewhere you didn\'t expect. You start with a confirmed malware campaign, a known threat actor, a documented command-and-control server. You expect to find more of the same — maybe a second C2, maybe a staging server, maybe a domain registered the same week with the same sloppy WHOIS. What you don\'t expect to find is a multi-persona credential harvesting operation running across five VPS nodes, three hosting providers, two domains, and a fresh FRP reverse proxy deployment that went live while you were looking at it.\n\nThat\'s what this investigation produced. What follows is the full account of how it happened, what was found, and why it matters — including the part where the infrastructure stopped fitting the threat actor it was supposedly associated with.',
     keyFindings: [
+      'Post-publication active analysis confirmed live CompuMark (Clarivate) credential portal, revealed a third TSplus node invisible to passive OSINT, and established a two-frontend one-backend cluster architecture — see Active Analysis Addendum (RN-004)',
       'Five-node credential harvesting cluster identified across three hosting providers (Database Mart LLC, AWS, Psychz Networks)',
       'Infrastructure active since at least May 2023 — 22 months of continuous, undocumented operation',
       'Domain namespaces include a lookalike of a legitimate Mexican company, suggesting targeted social engineering',
@@ -66,7 +67,8 @@ const REPORTS = [
       { value: '22 MONTHS' },
       { value: 'JUNE 2026' }
     ],
-    featured: true
+    featured: true,
+    relatedNotes: ['rn-004']
   },
   {
     id: '001',
@@ -113,6 +115,65 @@ const REPORTS = [
 // Analyst notebook entries. Lightweight, quick to publish.
 
 const RESEARCH_NOTES = [
+  {
+    id: 'rn-004',
+    title: 'Active Analysis Addendum: The Wrong Tenant',
+    date: '2026-06-24',
+    displayDate: 'June 24, 2026',
+    classification: 'UNCLASSIFIED',
+    status: 'Published',
+    tags: ['APT36', 'Transparent Tribe', 'active analysis', 'TSplus', 'infrastructure', 'credential harvesting'],
+    excerpt: 'Post-publication active analysis of the Issue 002 cluster confirmed a live CompuMark credential portal, uncovered a third TSplus node invisible to passive OSINT, and established a revised two-frontend, one-backend cluster architecture with FRP as the permanent backbone.',
+    content: `## Context
+
+Issue 002 — "The Wrong Tenant" — was published June 2026 based entirely on passive OSINT: Shodan, Censys, VirusTotal, crt.sh, and WHOIS. Following publication, active analysis of the five cluster nodes was conducted via urlscan.io, VirusTotal relationship graphs, and direct probing from an isolated Whonix/Tor environment. This note documents what passive methods could not see.
+
+## What Passive OSINT Missed
+
+**1. A third TSplus portal — lagerhaus node (108.181.174.67)**
+
+In passive collection, lagerhaus appeared as an unconfigured IIS default page on ports 80 and 443. Active analysis sent HEAD requests to ports 8443 and 8080 — the same non-standard ports used by the other TSplus nodes. Both returned HTTP 200 with \`Content-Length: 55569\` and \`Last-Modified: Fri, 12 Jun 2026\`. A live TSplus Web Access portal, standing since June 12, 2026 — the same day the lagerhaus TLS cert was issued and the subdomain first resolved in DNS. Fully operational. Entirely invisible to passive collection.
+
+This is a direct demonstration of passive OSINT's ceiling: the portal was there the whole time. Urlscan checked ports 80 and 443, not 8443.
+
+**2. CompuMark credential portal — confirmed live and operational**
+
+The compumark node (35.86.103.233) serves the authentic CompuMark logo — a trademark research platform owned by Clarivate Analytics — and presents a fully Spanish-language TSplus login interface: \`Inicio Sesion\`, \`Nombre Usuario:\`, \`Contraseña:\`.
+
+The TEMPLATEVALUES configuration embedded in the portal's HTML confirms the portal title is operator-set to \`Web Access CompuMark\`. A POST to the credential endpoint returned a five-byte server response, confirming the portal evaluates submitted credentials server-side.
+
+Post-authentication, the portal redirects to \`index_applications.html\` — a fake "Remote Applications Portal" landing page. Victims who enter credentials see a branded portal experience before the connection fails. The deception runs past the login screen.
+
+**3. Revised cluster architecture**
+
+Passive analysis treated the cluster as five largely independent nodes. TEMPLATEVALUES extraction across all accessible TSplus portals revealed a different picture. All credential capture ultimately routes to a single backend — the primary node at 93.127.128.229 — via two separate paths:
+
+\`\`\`
+CompuMark (35.86.103.233)  → localhost:3389 → FRP:7000 → operator RDP
+Lagerhaus (108.181.174.67) → localhost:1097 → FRP tunnel → primary node
+\`\`\`
+
+FRP, running on port 7000 with a deliberately blank-subject, 10-year-validity TLS cert, is the permanent backbone of the cluster. The two TSplus frontends are ingress surfaces. The primary node at 93.127.128.229 is the single point of failure for the entire operation.
+
+## Additional Findings
+
+- **FRP dashboard (port 7500):** Auth-locked with non-default credentials. Seven common defaults tested — all 401. Dashboard internet-exposed but not accessible via defaults — partial OPSEC.
+- **CN=tst cert:** Identical certificate (C=FR, O=common, CN=tst, valid 2012–2112) confirmed on both compumark and lagerhaus across different ASNs. Same certificate file copied to two nodes — strongest co-deployment indicator in the cluster.
+- **Port 1097 cert reissued June 21, 2026** — after Issue 002 publication. Infrastructure actively maintained post-publication.
+- **TSplus canonical tag not stripped:** \`<link rel="canonical" href="https://dv.tsplus.net">\` present in portal HTML, identifying the installation to any crawler reading canonical tags.
+- **DNS stable post-publication:** All five subdomains resolve to original IPs as of June 24, 2026. No operator reaction to publication in 3+ weeks.
+- **IKConsulting (184.72.115.35):** Only cluster node with vendor detections — Fortinet: Malware; Chong Lua Dao: Malicious. WordPress brute force documented June 2022 and June 2024. In BadIPs malware network lists since November 2025.
+
+## Methodology
+
+All active probing conducted from Whonix Workstation (KVM) via verified Tor SOCKS5 proxy. No automated credential attacks were used — FRP dashboard testing was limited to seven known defaults. TEMPLATEVALUES extraction used plain curl against internet-exposed web portals. SSL cert extraction used openssl s_client on publicly listening ports.
+
+## Assessment
+
+Active analysis confirmed and materially extended Issue 002's core finding. CompuMark impersonation is live, dressed, and operational. The revised architecture collapses what appeared to be a distributed five-node cluster into a single-backend operation with two credential-capture frontends. The lagerhaus portal's invisibility to passive OSINT was not an anomaly — it was a consequence of checking expected ports only. The operator chose 8443 and 8080 because those are TSplus defaults, not web defaults.
+
+**Confidence:** All findings assessed HIGH from direct active extraction, with the exception of the lagerhaus FRP tunnel inference (MEDIUM-HIGH — based on port 1097 matching the primary node's non-standard RDP port).`
+  },
   {
     id: 'rn-003',
     title: 'Certificate Reuse Across Unrelated Campaigns',
