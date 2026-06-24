@@ -43,7 +43,7 @@ const REPORTS = [
     summary: 'An infrastructure pivot from a confirmed APT36 C2 produced a five-node credential harvesting cluster operating across three hosting providers under two domain namespaces — one a lookalike of a real Mexican company. The cluster has been in continuous operation since at least May 2023. None of it appears in any prior threat intelligence report. The operational discipline documented here is inconsistent with publicly attributed APT36 capability.',
     executiveSummary: 'There is a particular kind of unease that comes from pulling a thread and finding that it leads somewhere you didn\'t expect. You start with a confirmed malware campaign, a known threat actor, a documented command-and-control server. You expect to find more of the same — maybe a second C2, maybe a staging server, maybe a domain registered the same week with the same sloppy WHOIS. What you don\'t expect to find is a multi-persona credential harvesting operation running across five VPS nodes, three hosting providers, two domains, and a fresh FRP reverse proxy deployment that went live while you were looking at it.\n\nThat\'s what this investigation produced. What follows is the full account of how it happened, what was found, and why it matters — including the part where the infrastructure stopped fitting the threat actor it was supposedly associated with.',
     keyFindings: [
-      'Post-publication active analysis confirmed live CompuMark (Clarivate) credential portal, revealed a third TSplus node invisible to passive OSINT, and established a two-frontend one-backend cluster architecture — see Active Analysis Addendum (RN-004)',
+      'Post-publication active analysis confirmed live CompuMark (Clarivate) credential portal, revealed a third TSplus node invisible to passive OSINT, and established a two-frontend one-backend cluster architecture — [Active Analysis Addendum (RN-004)](research-notes.html?id=rn-004)',
       'Five-node credential harvesting cluster identified across three hosting providers (Database Mart LLC, AWS, Psychz Networks)',
       'Infrastructure active since at least May 2023 — 22 months of continuous, undocumented operation',
       'Domain namespaces include a lookalike of a legitimate Mexican company, suggesting targeted social engineering',
@@ -134,11 +134,23 @@ Issue 002 — "The Wrong Tenant" — was published June 2026 based entirely on p
 
 In passive collection, lagerhaus appeared as an unconfigured IIS default page on ports 80 and 443. Active analysis sent HEAD requests to ports 8443 and 8080 — the same non-standard ports used by the other TSplus nodes. Both returned HTTP 200 with \`Content-Length: 55569\` and \`Last-Modified: Fri, 12 Jun 2026\`. A live TSplus Web Access portal, standing since June 12, 2026 — the same day the lagerhaus TLS cert was issued and the subdomain first resolved in DNS. Fully operational. Entirely invisible to passive collection.
 
+![Lagerhaus node urlscan — passive OSINT saw only an IIS default page](assets/images/rn004-lagerhaus-passive.png)
+
+*Above: The urlscan.io scan of 108.181.174.67 on port 80, as conducted during Issue 002's passive collection phase. Page title: "IIS Windows Server." The TSplus portal on ports 8443/8080 was not probed and did not appear in this scan.*
+
 This is a direct demonstration of passive OSINT's ceiling: the portal was there the whole time. Urlscan checked ports 80 and 443, not 8443.
 
 **2. CompuMark credential portal — confirmed live and operational**
 
 The compumark node (35.86.103.233) serves the authentic CompuMark logo — a trademark research platform owned by Clarivate Analytics — and presents a fully Spanish-language TSplus login interface: \`Inicio Sesion\`, \`Nombre Usuario:\`, \`Contraseña:\`.
+
+![CompuMark logo being served directly from the attacker-controlled node (35.86.103.233/logo.png)](assets/images/rn004-compumark-logo.png)
+
+*Above: The authentic CompuMark (Clarivate) corporate logo retrieved directly from the adversary-controlled node at 35.86.103.233. The browser address bar and "Not Secure" warning confirm the source.*
+
+![CompuMark TSplus credential portal — Spanish-language login page](assets/images/rn004-compumark-portal.png)
+
+*Above: The live TSplus Web Access portal as rendered by the compumark node. "Inicio Sesion" (Log In), "Nombre Usuario" (Username), "Contraseña" (Password) — fully Spanish-language, carrying the CompuMark brand mark. Captured via urlscan.io screenshot.*
 
 The TEMPLATEVALUES configuration embedded in the portal's HTML confirms the portal title is operator-set to \`Web Access CompuMark\`. A POST to the credential endpoint returned a five-byte server response, confirming the portal evaluates submitted credentials server-side.
 
@@ -159,6 +171,11 @@ FRP, running on port 7000 with a deliberately blank-subject, 10-year-validity TL
 
 - **FRP dashboard (port 7500):** Auth-locked with non-default credentials. Seven common defaults tested — all 401. Dashboard internet-exposed but not accessible via defaults — partial OPSEC.
 - **CN=tst cert:** Identical certificate (C=FR, O=common, CN=tst, valid 2012–2112) confirmed on both compumark and lagerhaus across different ASNs. Same certificate file copied to two nodes — strongest co-deployment indicator in the cluster.
+
+![VirusTotal Relations tab for lagerhaus node showing the shared CN=tst certificate](assets/images/rn004-lagerhaus-cert.png)
+
+*Above: VirusTotal Relations view for 108.181.174.67 (lagerhaus), showing the historical CN=tst certificate with C=FR issuer and 2012–2112 validity window — identical to the cert found on the compumark node (35.86.103.233) on a different ASN.*
+
 - **Port 1097 cert reissued June 21, 2026** — after Issue 002 publication. Infrastructure actively maintained post-publication.
 - **TSplus canonical tag not stripped:** \`<link rel="canonical" href="https://dv.tsplus.net">\` present in portal HTML, identifying the installation to any crawler reading canonical tags.
 - **DNS stable post-publication:** All five subdomains resolve to original IPs as of June 24, 2026. No operator reaction to publication in 3+ weeks.
