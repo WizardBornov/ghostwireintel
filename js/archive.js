@@ -58,7 +58,7 @@ function renderArchiveGrid() {
     return;
   }
 
-  container.innerHTML = reports.map(r => renderDossierCard(r)).join('');
+  container.innerHTML = renderReportList(reports);
   updateCount(reports.length);
 
   // Apply fade-in

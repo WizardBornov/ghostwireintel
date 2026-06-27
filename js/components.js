@@ -44,10 +44,13 @@ function toggleNav() {
 }
 
 // ---- Dossier Card ----
-function renderDossierCard(report, featured = false) {
+function renderDossierCard(report, featured = false, isNested = false) {
   const statusClass = report.status ? report.status.toLowerCase() : 'published';
   const tags = renderTags(report.tags.slice(0, 4));
-  const cardClass = featured ? 'dossier-card dossier-card--featured' : 'dossier-card';
+  let cardClass = featured ? 'dossier-card dossier-card--featured' : 'dossier-card';
+  if (isNested) cardClass += ' dossier-card--nested';
+  
+  const addendumBadge = report.type === 'addendum' ? `<span class="dossier-card-badge">ADDENDUM</span>` : '';
 
   return `
     <article class="${cardClass}" onclick="window.location.href='report.html?id=${report.id}'">
@@ -61,6 +64,7 @@ function renderDossierCard(report, featured = false) {
         <div class="dossier-card-meta">
           <span class="dossier-card-issue">#ISSUE ${String(report.issue).padStart(3, '0')}</span>
           <span class="dossier-card-date">${report.displayDate}</span>
+          ${addendumBadge}
           ${report.status ? `<span class="dossier-card-status dossier-card-status--${statusClass}">${report.status}</span>` : ''}
         </div>
         <h3 class="dossier-card-title">${report.title}</h3>
@@ -69,6 +73,50 @@ function renderDossierCard(report, featured = false) {
         <div class="dossier-card-tags">${tags}</div>
       </div>
     </article>`;
+}
+
+// ---- Hierarchical Report List ----
+function renderReportList(reportsArray) {
+  let html = '';
+  const renderedIds = new Set();
+
+  reportsArray.forEach(report => {
+    if (renderedIds.has(report.id)) return;
+
+    if (report.type === 'addendum') {
+      const parent = getReportById(report.parentIssue);
+      if (parent && !renderedIds.has(parent.id)) {
+        html += `<div class="report-group">`;
+        html += renderDossierCard(parent);
+        renderedIds.add(parent.id);
+        
+        const addenda = reportsArray.filter(r => r.type === 'addendum' && r.parentIssue === parent.id);
+        addenda.forEach(addendum => {
+          html += `<div class="addendum-wrapper"><div class="addendum-indicator">↳</div>${renderDossierCard(addendum, false, true)}</div>`;
+          renderedIds.add(addendum.id);
+        });
+        html += `</div>`;
+      } else if (!parent) {
+        html += renderDossierCard(report);
+        renderedIds.add(report.id);
+      }
+    } else {
+      html += `<div class="report-group">`;
+      html += renderDossierCard(report);
+      renderedIds.add(report.id);
+      
+      const addenda = reportsArray.filter(r => r.type === 'addendum' && r.parentIssue === report.id);
+      if (addenda.length > 0) {
+        addenda.forEach(addendum => {
+          html += `<div class="addendum-wrapper"><div class="addendum-indicator">↳</div>${renderDossierCard(addendum, false, true)}</div>`;
+          renderedIds.add(addendum.id);
+        });
+      }
+      html += `</div>`;
+    }
+  });
+
+  return html;
 }
 
 // ---- Metadata Panel ----

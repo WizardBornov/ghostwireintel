@@ -61,7 +61,7 @@ function renderRecentReports() {
     ${renderSectionLabel('ARCHIVE')}
     <h2 class="section-title">Recent Reports</h2>
     <div class="reports-grid">
-      ${reports.map(r => renderDossierCard(r)).join('')}
+      ${renderReportList(reports)}
     </div>
     <div style="text-align: center; margin-top: var(--space-2xl);">
       <a href="archive.html" class="btn btn-outline">View Full Archive →</a>

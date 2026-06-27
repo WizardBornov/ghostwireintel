@@ -54,6 +54,9 @@ function renderReport(report) {
       ${report.status ? `<span class="report-status report-status--${statusClass}">${report.status}</span>` : ''}
     </div>
 
+    <!-- Update Notices -->
+    ${renderUpdateNotice(report)}
+
     <!-- Cover Image -->
     ${report.coverImage ? `
       <div class="report-cover container">
@@ -66,6 +69,9 @@ function renderReport(report) {
 
       <!-- Metadata Panel -->
       ${renderMetadataPanel(report)}
+
+      <!-- Timeline (for Addenda) -->
+      ${renderTimeline(report)}
 
       <!-- Stats Row -->
       ${renderStatRow(report.stats)}
@@ -106,7 +112,17 @@ function renderReport(report) {
 }
 
 function renderRelatedReports(currentReport) {
-  const related = REPORTS.filter(r => r.id !== currentReport.id).slice(0, 3);
+  let related = [];
+  if (currentReport.relatedReports && currentReport.relatedReports.length > 0) {
+    related = currentReport.relatedReports.map(id => getReportById(id)).filter(r => r);
+  }
+  
+  // Fill up to 3 if needed
+  if (related.length < 3) {
+    const others = REPORTS.filter(r => r.id !== currentReport.id && !related.find(rel => rel.id === r.id)).slice(0, 3 - related.length);
+    related = related.concat(others);
+  }
+
   if (related.length === 0) return '';
 
   return `
@@ -118,6 +134,59 @@ function renderRelatedReports(currentReport) {
       </div>
     </div>
   `;
+}
+
+function renderUpdateNotice(report) {
+  if (report.type === 'report' && report.relatedReports && report.relatedReports.length > 0) {
+    const addendum = getReportById(report.relatedReports[0]); // Assuming 002A is the primary related report
+    if (addendum && addendum.type === 'addendum') {
+      return `
+        <div class="update-notice container">
+          <h4>UPDATE AVAILABLE</h4>
+          <p>This investigation has been supplemented by <strong>Issue ${addendum.issue} – ${addendum.subtitle}</strong> containing additional infrastructure observations and updated analysis.</p>
+          <a href="report.html?id=${addendum.id}" class="btn btn-primary" style="display: inline-block;">View Addendum →</a>
+        </div>
+      `;
+    }
+  } else if (report.type === 'addendum' && report.parentIssue) {
+    const parent = getReportById(report.parentIssue);
+    if (parent) {
+      return `
+        <div class="update-notice container">
+          <h4>INFRASTRUCTURE ADDENDUM</h4>
+          <p>This publication extends the findings of <strong>GhostWire Issue ${String(parent.issue).padStart(3, '0')}</strong>. It documents newly observed infrastructure, post-publication observations, and updated analytical conclusions discovered after the original report was released.</p>
+          <a href="report.html?id=${parent.id}" class="btn btn-outline" style="display: inline-block;">View Original Investigation →</a>
+        </div>
+      `;
+    }
+  }
+  return '';
+}
+
+function renderTimeline(report) {
+  if (report.type === 'addendum' && report.parentIssue) {
+    const parent = getReportById(report.parentIssue);
+    if (parent) {
+      return `
+        <div class="timeline-component">
+          <div class="timeline-title">Publication Timeline</div>
+          
+          <div class="timeline-event">
+            <span style="color: var(--text-secondary); font-size: var(--text-sm);">${parent.displayDate}</span>
+            <a href="report.html?id=${parent.id}" class="link-accent">Issue ${String(parent.issue).padStart(3, '0')} — Published</a>
+          </div>
+          
+          <div class="timeline-arrow">↓</div>
+          
+          <div class="timeline-event current">
+            <span style="font-size: var(--text-sm);">${report.displayDate}</span>
+            <span>Issue ${String(report.issue).padStart(3, '0')} — ${report.subtitle}</span>
+          </div>
+        </div>
+      `;
+    }
+  }
+  return '';
 }
 
 function showError(message) {

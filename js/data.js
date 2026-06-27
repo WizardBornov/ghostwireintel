@@ -30,6 +30,48 @@ const SITE_CONFIG = {
 
 const REPORTS = [
   {
+    id: '002A',
+    issue: '2A',
+    title: 'The Wrong Tenant',
+    subtitle: 'Infrastructure Addendum',
+    date: '2026-06-25',
+    displayDate: 'JUNE 2026',
+    threatActor: 'APT36 / Transparent Tribe',
+    primaryTarget: 'India — Gov, Defense, Professional Services',
+    classification: 'UNCLASSIFIED',
+    status: 'Published',
+    summary: 'Post-publication infrastructure observations and updated assessment. This report supplements GhostWire Issue 002 and should be read alongside the original investigation. It documents newly observed infrastructure, post-publication observations, and updated analytical conclusions discovered after the original report was released.',
+    executiveSummary: 'This addendum documents active analysis conducted June 23–24, 2026 using urlscan.io remote browser scans, VirusTotal relationship mining, and direct TCP/TLS probing via Whonix Workstation over Tor. The analysis produced findings not obtainable from passive sources alone. All session traffic terminates at 93.127.128.229. FRP port 7000 is the convergence backbone.',
+    keyFindings: [
+      'CompuMark impersonation confirmed via direct visual evidence.',
+      'Full attack chain assembled from phishing portal to operator RDP.',
+      'Lagerhaus TSplus portal discovered on non-standard ports.',
+      'Cluster architecture revised to two-frontend/one-backend.',
+      'Post-publication infrastructure remains active and stable.'
+    ],
+    coverImage: 'assets/images/issue-002a-cover.jpg',
+    pdfFile: 'assets/reports/ghostwire-issue-002a.pdf',
+    tags: ['APT36', 'Transparent Tribe', 'credential harvesting', 'infrastructure analysis', 'addendum', 'active analysis'],
+    metadata: {
+      subject: 'APT36 / Transparent Tribe',
+      parentReport: 'GW-002 — The Wrong Tenant',
+      addendumType: 'Active Analysis — Post-Publication',
+      analysisDate: 'June 23–24, 2026',
+      nodesProbed: '5 confirmed',
+      status: 'ACTIVE — infrastructure stable'
+    },
+    stats: [
+      { value: '5 NODES PROBED' },
+      { value: '3 TOOLS' },
+      { value: 'JUNE 23-24' }
+    ],
+    featured: true,
+    category: 'Addendum',
+    type: 'addendum',
+    parentIssue: '002',
+    relatedReports: ['002']
+  },
+  {
     id: '002',
     issue: 2,
     title: 'The Wrong Tenant',
@@ -67,7 +109,10 @@ const REPORTS = [
       { value: '22 MONTHS' },
       { value: 'JUNE 2026' }
     ],
-    featured: true,
+    featured: false,
+    category: 'Report',
+    type: 'report',
+    relatedReports: ['002A'],
     relatedNotes: ['rn-004']
   },
   {
@@ -107,7 +152,10 @@ const REPORTS = [
       { value: '6 GRU' },
       { value: 'APT44' }
     ],
-    featured: false
+    featured: false,
+    category: 'Report',
+    type: 'report',
+    relatedReports: []
   }
 ];
 
