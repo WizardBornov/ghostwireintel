@@ -1,5 +1,13 @@
 [
   {
+    "id": "045189cd-45da-49c8-83f1-6da481574b4c",
+    "title": "Research paper progress",
+    "body": "Had to take a big decision today. Since we are short on time, and we needed full analysis on 5 programs. I decided to drop FFmpeg and nginx from our candidates list, even though I had put a lot of effort in their analysis. But still I believe that was the correct decision. given now I have full analysis on 5 real programs. Other than that one big surprising turn of events is that we are now collaborating with Eric Bodden and Fabian... one of the founders and the current developer of PhASAR... one of the 2 tools our whole paper was built on... And I am also actively contributing to fixing some problems in SVF, through multiple git commmits...and also in active communication with Prof. Yui.. the one maintaining SVF... crazy stuff I know... I had set up my claude to actively find emails I could outreach to for networking purposes... when I sent the mail to Eric and Yui, I did NOT even expect a reply... but instead now we are collaborating .... crazy stuff man crazy stuff...",
+    "tag": "technical",
+    "createdAt": "2026-09-19T16:01:25.705Z",
+    "updatedAt": "2026-09-19T16:01:25.705Z"
+  },
+  {
     "id": "ee40f91d-946c-4b7f-93ea-5740e0632b76",
     "title": "I am going to do it",
     "body": "Okay... in a previous entry I already talked about getting my spark back. Slowly. But surely. I watched 2 youtube videos today that really made me...idk... feel something. Confident? Hopeful? Once again energetic? I can't find the exact word right now.. but yeah.\nhttps://www.youtube.com/watch?v=P0UC7c0bxlA \nhttps://www.youtube.com/watch?v=Y4g4ZriKV7A\nAnd after I watched these.. I realized that yeah! I am also pretty fucking goated. Like I know I am not there yet, but if I can't even have the confidence to say that I am CAPABLE of reaching that level, then how can I ever reach it? In the first video it talked about how we were taught to be humble... but the meaning we took from it ended up becoming a con. Like yeah, we should be humble, but not so much that we downplay ourselves. When deep down we all know what exactly we are capable of. I am not really sure why but it feels like the cogs in my brain are finally starting to move once again. When I made progress in my Malware Analysis learning, my brain finally felt alive once again, out of the auto-pilot I unknowingly put it in. To anyone who is reading this, and is currently in their burntout and life fucking you up all the time phase of your life.. I do suggest you watch those 2 pretty short videos. And as it said in the 2nd video... don't just watch and think. Do it. You just need a rough sketch, no need to try and create the \"perfect\" plan. Just fucking do it.",
