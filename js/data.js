@@ -30,6 +30,49 @@ const SITE_CONFIG = {
 
 const REPORTS = [
   {
+    id: '003',
+    issue: 3,
+    title: 'The Proxy in the File Manager',
+    subtitle: 'How a Mainstream Android File Manager Shipped the Popa Proxyware',
+    date: '2026-10-16',
+    displayDate: 'OCTOBER 2026',
+    threatActor: 'Popa / NetNut (Alarum Technologies)',
+    primaryTarget: 'X-Plore users \u2014 Android',
+    classification: 'UNCLASSIFIED',
+    status: 'Published',
+    summary: 'A hidden residential-proxy SDK, io.nn.alpha, shipped inside X-Plore, a mainstream Android file manager with a very large install base, for roughly nine months. It is the "Alpha" variant of the Popa proxyware family that Synthient, Qurium and XLab tie to the residential-proxy provider NetNut (Alarum Technologies). The variant and its domains were already public; the carrier was not. The analysed sample dates to September 2024, roughly 17 months before the earliest native-generation sample previously on record, and still carries a leftover NEUPOP_LOCK constant under its "Alpha" branding.',
+    executiveSummary: 'X-Plore is the kind of app that sits quietly on millions of phones for years. For about nine months of its release history, some of those installs also carried a second, unadvertised job: lending out the phone\'s internet connection. Buried in the app was a module, io.nn.alpha, that on command would turn the device into a residential proxy, a relay that routes someone else\'s web traffic out through the user\'s home IP address.\n\nThe proxyware itself is not new. Researchers at Synthient, Qurium and XLab have documented the Popa family and traced it to the residential-proxy provider NetNut. What none of them named is where this build was riding: X-Plore, a mainstream file manager, not the obscure streaming and TV-box apps the prior reports focused on. The build we pulled apart dates to September 2024, about 17 months before the earliest sample of this native-code generation previously on record.',
+    keyFindings: [
+      'X-Plore, a 100M+ install mainstream file manager, shipped the io.nn.alpha residential-proxy SDK. No public report had named it as a carrier.',
+      'The sample is the C++ "Alpha" generation of the Popa family, dated September 2024 \u2014 roughly 17 months before the earliest native-generation sample Synthient documents.',
+      'A server-side gate (/initreq) decides, per device, whether the proxy activates; the host package name and device details are reported to the C2.',
+      'Once active, the control server can open a TCP tunnel from the phone to an arbitrary host, limited only by a private-range filter.',
+      'Family, domains and attribution (NetNut / Alarum / NinjaTech) are cited from prior work (Synthient, Qurium, XLab); the network was FBI-seized in July 2026.',
+      'Three validated detection rules (native YARA, network Sigma, decrypted-DEX YARA) accompany the report.'
+    ],
+    coverImage: 'assets/images/issue-003-cover.jpg',
+    pdfFile: 'assets/reports/ghostwire-issue-003.pdf',
+    tags: ['proxyware', 'Popa', 'NetNut', 'io.nn.alpha', 'Android', 'residential proxy', 'reverse engineering', 'X-Plore'],
+    metadata: {
+      subject: 'io.nn.alpha ("Alpha") residential-proxy SDK',
+      carrier: 'X-Plore File Manager (com.lonelycatgames.Xplore)',
+      family: 'Popa / NetNut \u2014 Alarum Technologies',
+      sample: 'libnativesdk.so \u2014 arm64, X-Plore 4.43.10',
+      presentSince: 'Sep 2024 (removed by 4.44.00)',
+      threatLevel: 'Network FBI-seized Jul 2026'
+    },
+    stats: [
+      { value: '8 SDK DOMAINS' },
+      { value: '7 C2 COMMANDS' },
+      { value: '~9 MONTHS' },
+      { value: 'OCT 2026' }
+    ],
+    featured: true,
+    category: 'Report',
+    type: 'report',
+    relatedReports: []
+  },
+  {
     id: '002A',
     issue: '2A',
     title: 'The Wrong Tenant',
