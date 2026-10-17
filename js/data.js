@@ -40,10 +40,10 @@ const REPORTS = [
     primaryTarget: 'X-Plore users \u2014 Android',
     classification: 'UNCLASSIFIED',
     status: 'Published',
-    summary: 'An embedded residential-proxy SDK, io.nn.alpha, shipped inside X-Plore, a mainstream Android file manager (10M+ Play installs), for roughly nine months. It is the "Alpha" variant of the Popa proxyware family; Qurium and XLab named the variant, Synthient documented the family, and Synthient and Qurium link it to the provider NetNut (Alarum Technologies), which NetNut disputes and which this report does not independently verify. The variant and its domains were already public; the carrier was not. The Alpha native library is present in X-Plore builds from October 2024, a lower bound roughly 16 months before the earliest-seen sample Synthient dates to this native generation, and it still carries a leftover NEUPOP_LOCK constant under its "Alpha" branding.',
+    summary: 'An embedded residential-proxy SDK, io.nn.alpha, shipped inside X-Plore, a mainstream Android file manager (10M+ Play installs), for roughly nine months. It is the "Alpha" variant of the Popa proxyware family; Qurium and XLab named the variant, Synthient documented the family, and Synthient and Qurium link it to the provider NetNut (Alarum Technologies), which NetNut disputes and which this report does not independently verify. The variant, its domains and X-Plore\'s publisher ID (xp_gms, listed in Synthient\'s Popa publisher table) were already public; this report adds the affected build range, the dating and the native analysis. The Alpha native library is present in X-Plore builds from October 2024, a lower bound roughly 16 months before the earliest-seen sample Synthient dates to this native generation, and it still carries a leftover NEUPOP_LOCK constant under its "Alpha" branding.',
     executiveSummary: 'X-Plore is the kind of app that sits quietly on millions of phones for years. For about nine months of its release history, some of those installs also carried a second, unadvertised job: lending out the phone\'s internet connection. Buried in the app was a module, io.nn.alpha, that on command would turn the device into a residential proxy, a relay that routes someone else\'s web traffic out through the user\'s home IP address.\n\nThe proxyware itself is not new. Researchers at Synthient, Qurium and XLab have documented the Popa family and traced it to the residential-proxy provider NetNut. What none of them named is where this build was riding: X-Plore, a mainstream file manager, not the obscure streaming and TV-box apps the prior reports focused on. The native library is present in X-Plore builds from October 2024 (the package a build earlier, September 2024), roughly 16 months before the earliest sample Synthient dates to this native-code generation.',
     keyFindings: [
-      'X-Plore, a 100M+ install mainstream file manager, shipped the io.nn.alpha residential-proxy SDK. No public report had named it as a carrier.',
+      'X-Plore, a 10M+ install mainstream file manager, shipped the io.nn.alpha residential-proxy SDK from build 4.39.02 until its removal by 4.44.00. Synthient\'s Popa publisher table lists it as xp_gms; this report supplies the build range and dating.',
       'The C++ "Alpha" native library is present in X-Plore from October 2024 (package from September 2024), a lower bound roughly 16 months before the earliest-seen sample Synthient dates to this native generation.',
       'A server-side gate (/initreq) decides, per device, whether the proxy activates; the host package name and device details are reported to the C2.',
       'Once active, the control server can open a TCP tunnel from the phone to an arbitrary host, limited only by a private-range filter.',
@@ -59,7 +59,7 @@ const REPORTS = [
       family: 'Popa / NetNut \u2014 Alarum Technologies',
       sample: 'libnativesdk.so \u2014 arm64, X-Plore 4.43.10',
       presentSince: 'Sep 2024 (removed by 4.44.00)',
-      threatLevel: 'Network FBI-seized Jul 2026'
+      threatLevel: 'NetNut domains FBI-seized Jul 2026'
     },
     stats: [
       { value: '8 SDK DOMAINS' },
