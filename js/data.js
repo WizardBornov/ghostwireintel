@@ -30,6 +30,50 @@ const SITE_CONFIG = {
 
 const REPORTS = [
   {
+    id: '004',
+    issue: 4,
+    title: 'The Proxy Harvest',
+    subtitle: 'A Bandwidth-Harvesting SDK That Outlived a Seizure, and the Storefront Its Domains Point To',
+    date: '2026-10-22',
+    displayDate: 'OCTOBER 2026',
+    threatActor: 'Popa / HopMon (AltPop) — operator unattributed',
+    primaryTarget: 'Flix Vision users — Android',
+    classification: 'UNCLASSIFIED',
+    status: 'Published',
+    summary: 'The Popa/HopMon proxyware that Synthient and Qurium documented did not stop after the 2 July 2026 FBI/IRS-CI seizure of NetNut and Popa infrastructure. Its native engine, renamed AltPop (libalt.so 12.0.30), was already shipping inside Flix Vision, an unofficial free streaming app, three weeks before the seizure, and is unchanged through version 3.9.0; after the seizure the app dropped its seized C2 for dynamic-DNS seeds. In a one-time live run, an unmodified install given consent turned a cloud VM into a proxy exit for ten minutes, relaying 39 distinct customer-requested destinations through a controller. The app hardcodes two seed domains that share a TLS certificate and a CNAME and resolve into the abnetworks.io zone, the storefront of ABNetworks FZ-LLC, which advertises residential IPs for AI data collection and whose own consent page describes sourcing IPs from "partner apps." That ABNetworks monetises this specific app\'s bandwidth is inference from shared infrastructure and the vendor\'s own description, not a contract.',
+    executiveSummary: 'To watch a film on Flix Vision, you answer one question: keep the app free by sharing a little unused bandwidth, or sit through ads. Tap the first option and the phone becomes a doorway that strangers route their web traffic through, with the owner\'s home address on the outside.\n\nThat doorway is built by a proxyware SDK researchers have chased for a year. On 2 July 2026 the FBI and IRS-CI seized the Popa/NetNut network, yet the engine, lightly renamed to AltPop, was already inside Flix Vision three weeks earlier and kept running, swapping its burned command server for a fresh one. We watched an unmodified copy relay strangers\' requests through our IP for ten minutes. The app\'s hardcoded domains lead to ABNetworks, a UAE storefront selling "one million residential IPs for AI data collection" whose own page admits it sources them from "partner apps." Whether ABNetworks runs the harvesting or buys from whoever does is the one thing the infrastructure cannot settle on its own, and the report says so.',
+    keyFindings: [
+      'AltPop (libalt.so 12.0.30), the renamed Popa/HopMon native engine, shipped inside Flix Vision from version 3.7.0 (10 June 2026), three weeks before the 2 July 2026 seizure, and the binary is unchanged through 3.9.0.',
+      'After the seizure, version 3.8.0 dropped the seized cyberprotector.online C2 for dynamic-DNS HopMon seeds, the clearest sign of the operation adapting rather than ending.',
+      'In a one-time live run, an unmodified app given consent turned a cloud VM into a proxy exit for ten minutes, relaying 39 distinct customer-requested destinations through a controller at 102.165.4.65:15101. This was the HopMon path; AltPop itself stayed dormant.',
+      'The app hardcodes two seed domains (pubs.myrc.xyz, pubs.abnetworks.io) that share one TLS certificate and a CNAME (confirmed by direct query); abnetworks.io presents as ABNetworks FZ-LLC, selling residential IPs for AI data collection.',
+      'ABNetworks\' own Consent and Transparency page states it sources IPs from "partner apps"; a second brand, Moishi Nexus, shares a mail tenant with one abnetworks domain. The harvest-to-resale link is inference, not a contract.',
+      'The HopMon proxy library refuses to dial private, loopback and link-local IPv4 ranges (static analysis), so that path cannot reach a home LAN; this does not cover the AltPop relay or the code-loading module channel.',
+      'Two validated YARA rules (libalt, libhopmn) and two Sigma rules (DNS, controller) accompany the report.'
+    ],
+    coverImage: 'assets/images/issue-004-cover.jpg',
+    pdfFile: 'assets/reports/ghostwire-issue-004.pdf',
+    tags: ['proxyware', 'Popa', 'HopMon', 'AltPop', 'ABNetworks', 'residential proxy', 'Android', 'Flix Vision', 'reverse engineering', 'corporate OSINT'],
+    metadata: {
+      subject: 'AltPop / HopMon residential-proxy SDK',
+      carrier: 'Flix Vision (flix.com.vision) — off-store streaming app',
+      family: 'Popa / HopMon — operator unattributed',
+      sample: 'libalt.so 12.0.30 — arm64, Flix Vision 3.9.0',
+      presentSince: 'v3.7.0 (10 Jun 2026), unchanged through 3.9.0',
+      threatLevel: 'Live proxy path confirmed; corporate link inferred'
+    },
+    stats: [
+      { value: '4 STOREFRONT DOMAINS' },
+      { value: '6 RELAY COMMANDS' },
+      { value: '10-MIN LIVE RUN' },
+      { value: 'OCT 2026' }
+    ],
+    featured: true,
+    category: 'Report',
+    type: 'report',
+    relatedReports: ['003']
+  },
+  {
     id: '003',
     issue: 3,
     title: 'The Proxy in the File Manager',
