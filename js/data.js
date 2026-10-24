@@ -49,7 +49,8 @@ const REPORTS = [
       'The app hardcodes two seed domains (pubs.myrc.xyz, pubs.abnetworks.io) that share one TLS certificate and a CNAME (confirmed by direct query); abnetworks.io presents as ABNetworks FZ-LLC, selling residential IPs for AI data collection.',
       'ABNetworks\' own Consent and Transparency page states it sources IPs from "partner apps"; a second brand, Moishi Nexus, shares a mail tenant with one abnetworks domain. The harvest-to-resale link is inference, not a contract.',
       'The HopMon proxy library refuses to dial private, loopback and link-local IPv4 ranges (static analysis), so that path cannot reach a home LAN; this does not cover the AltPop relay or the code-loading module channel.',
-      'Two validated YARA rules (libalt, libhopmn) and two Sigma rules (DNS, controller) accompany the report.'
+      'Two validated YARA rules (libalt, libhopmn) and two Sigma rules (DNS, controller) accompany the report.',
+      'Update (2026-10-25): ABNetworks FZ-LLC exercised its right of reply. Their statement, denying any connection to the SDK or the July seizure, is reproduced in full in the report.'
     ],
     coverImage: 'assets/images/issue-004-cover.jpg',
     pdfFile: 'assets/reports/ghostwire-issue-004.pdf',
